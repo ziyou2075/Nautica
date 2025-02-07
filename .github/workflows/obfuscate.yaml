@@ -2,7 +2,9 @@ name: Obfuscate Code
 
 on:
   workflow_dispatch:
-
+  push:
+    paths:
+      - "_worker.js"
 jobs:
   scanner:
     runs-on: ubuntu-latest
