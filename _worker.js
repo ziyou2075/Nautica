@@ -193,15 +193,7 @@ export default {
           // Contoh: /ID, /SG, dll
           const proxyKeys = url.pathname.replace("/", "").toUpperCase().split(",");
           const proxyKey = proxyKeys[Math.floor(Math.random() * proxyKeys.length)];
-          let kvProxy = await env.nautica.get("kvProxy");
-          if (kvProxy) {
-            kvProxy = JSON.parse(kvProxy);
-          } else {
-            kvProxy = await getKVProxyList();
-            env.nautica.put("kvProxy", JSON.stringify(kvProxy), {
-              expirationTtl: 3600,
-            });
-          }
+          const kvProxy = await getKVProxyList();
 
           proxyIP = kvProxy[proxyKey][Math.floor(Math.random() * kvProxy[proxyKey].length)];
 
