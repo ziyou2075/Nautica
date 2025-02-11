@@ -20,7 +20,7 @@ const PROXY_BANK_URL = "https://raw.githubusercontent.com/FoolVPN-ID/Nautica/ref
 const DNS_SERVER_ADDRESS = "8.8.8.8";
 const DNS_SERVER_PORT = 53;
 const PROXY_HEALTH_CHECK_API = "https://id1.foolvpn.me/api/v1/check";
-const CONVERTER_URL = "https://nautica-tool.azurewebsites.net/api/v1/convert";
+const CONVERTER_URL = "https://api.foolvpn.me/convert";
 const DONATE_LINK = "https://trakteer.id/dickymuliafiqri/tip";
 const PROXY_PER_PAGE = 24;
 const WS_READY_STATE_OPEN = 1;
@@ -1347,9 +1347,14 @@ let baseHTML = `
 
       async function copyToClipboardAsTarget(target) {
         windowInfoContainer.innerText = "Generating config...";
-        const url = converterUrl + "?target=" + target + "&url=" + encodeURIComponent(rawConfig);;
+        const url = "${CONVERTER_URL}";
         const res = await fetch(url, {
-          redirect: "follow",
+          method: "POST",
+          body: JSON.stringify({
+            url: rawConfig,
+            format: target,
+            template: "cf",
+          }),
         });
 
         if (res.status == 200) {
@@ -1456,7 +1461,7 @@ let baseHTML = `
           if (containerRegionCheck == undefined) break;
 
           const res = fetch(
-            "https://nautica-tool.azurewebsites.net/api/v1/regioncheck?config=" + encodeURIComponent(configSample)
+            "https://api.foolvpn.me/regioncheck?config=" + encodeURIComponent(configSample)
           ).then(async (res) => {
             if (res.status == 200) {
               containerRegionCheck.innerHTML = "<hr>";
@@ -1485,7 +1490,7 @@ let baseHTML = `
       window.onload = () => {
         checkGeoip();
         checkProxy();
-        checkRegion();
+        // checkRegion();
 
         const observer = lozad(".lozad", {
           load: function (el) {
