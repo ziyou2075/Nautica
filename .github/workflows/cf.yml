@@ -38,11 +38,16 @@ jobs:
         with:
           ref: ${{ env.GIT_REF }}
           fetch-depth: 0
+      - name: Clear npm cache
+        run: npm cache clean --force
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.0.0'  # 指定 Node.js 版本
-
+      - name: Print Node.js and npm version
+        run: |
+          node -v
+          npm -v
       - name: 🛸 Env?
         # 'dev' env deploys to default WORKERS_ENV, which is, '' (an empty string)
         if: github.event.inputs.environment == 'prod' || github.event.inputs.environment == 'one'
