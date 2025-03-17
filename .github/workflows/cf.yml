@@ -80,7 +80,7 @@ jobs:
           npm -v
       - name: 📚 Wrangler publish
         # github.com/cloudflare/wrangler-action
-        uses: cloudflare/wrangler-action@3.0.0
+        uses: cloudflare/wrangler-action@3.4.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           # input overrides env-defaults, regardless
