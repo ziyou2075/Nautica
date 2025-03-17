@@ -73,11 +73,14 @@ jobs:
 
         # npm (and node16) are installed by wrangler-action in a pre-job setup
       - name: 🏗 Get dependencies
-        run: npm i
-
+        run: npm i --force
+      - name: Print Node.js and npm version
+        run: |
+          node -v
+          npm -v
       - name: 📚 Wrangler publish
         # github.com/cloudflare/wrangler-action
-        uses: cloudflare/wrangler-action@2.0.0
+        uses: cloudflare/wrangler-action@4.0.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           # input overrides env-defaults, regardless
