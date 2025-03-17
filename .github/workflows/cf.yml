@@ -42,8 +42,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.0.0'  # 指定 Node.js 版本
-      - run: npm ci
-      - run: npm run build --if-present
+
       - name: 🛸 Env?
         # 'dev' env deploys to default WORKERS_ENV, which is, '' (an empty string)
         if: github.event.inputs.environment == 'prod' || github.event.inputs.environment == 'one'
