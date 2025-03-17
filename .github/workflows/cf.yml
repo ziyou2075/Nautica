@@ -34,11 +34,16 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.GIT_REF }}
           fetch-depth: 0
-
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.0.0'  # 指定 Node.js 版本
+      - run: npm ci
+      - run: npm run build --if-present
       - name: 🛸 Env?
         # 'dev' env deploys to default WORKERS_ENV, which is, '' (an empty string)
         if: github.event.inputs.environment == 'prod' || github.event.inputs.environment == 'one'
